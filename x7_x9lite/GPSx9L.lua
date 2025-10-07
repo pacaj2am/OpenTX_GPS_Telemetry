@@ -55,6 +55,7 @@ local now = 0
 local ctr = 0
 local coordinates_prev = 0
 local coordinates_current = 0
+local RxBt = 0
 
 local old_time_write2 = 0
 local wait = 100
@@ -91,14 +92,14 @@ local function write_log()
 						
 		--write logfile		
 		file = io.open(log_filename, "a")    						
-		io.write(file, coordinates_current ..",".. time_power_on ..", "..  gpsSATS..", ".. gpsALT ..", ".. gpsSpeed, "\r\n")				
+		io.write(file, coordinates_current ..",".. time_power_on ..", "..  gpsSATS..", ".. gpsALT ..", ".. gpsSpeed ..", ".. RxBt, "\r\n")				
 		io.close(file)			
 
 		if ctr >= 99 then
 			ctr = 0				
 			--clear log
 			file = io.open(log_filename, "w") 
-				io.write(file, "Number,LAT,LON,radio_time,satellites,GPSalt,GPSspeed", "\r\n")		
+				io.write(file, "Number,LAT,LON,radio_time,satellites,GPSalt,GPSspeed,RxBt", "\r\n")		
 			io.close(file)	
 			
 			--reopen log for appending data
@@ -132,7 +133,9 @@ local function calc_Distance(LatPos, LonPos, LatHome, LonHome)
 	return rnd(dist,2)
 end
 
-local function init()  				
+local function init()
+	RxBt = getValue("RxBt")
+	
 	gpsId = getTelemetryId("GPS")
 	--number of satellites crossfire
 	gpssatId = getTelemetryId("Sats")
@@ -260,7 +263,7 @@ local function run(event)
 	lcd.drawText(2,1,"State: " ,SMLSIZE)		
 	lcd.drawFilledRectangle(1,0, 126, 8, GREY_DEFAULT)
 	
-	lcd.drawPixmap(2,10, "/SCRIPTS/TELEMETRY/BMP/Sat16.bmp")		
+	-- lcd.drawPixmap(2,10, "/SCRIPTS/TELEMETRY/BMP/Sat16.bmp")		
 	lcd.drawLine(42,8, 42, 27, SOLID, FORCE)		
 	lcd.drawPixmap(44,9, "/SCRIPTS/TELEMETRY/BMP/distance16.bmp")		
 	lcd.drawLine(84,8, 84, 27, SOLID, FORCE)	
@@ -278,7 +281,8 @@ local function run(event)
 	if update == true then
 						
 		lcd.drawText(32,1,gpsFIX ,SMLSIZE + INVERS)			
-		lcd.drawText(22,14, gpsSATS, SMLSIZE)		
+		lcd.drawText(4,10, gpsSATS .. "sat", SMLSIZE)		
+		lcd.drawText(4,20, RxBt .. "V", SMLSIZE)		
 		lcd.drawText(60,10, gpsDtH, SMLSIZE)
 		lcd.drawText(73,20, "km"  , SMLSIZE)
 		lcd.drawText(103,10, gpsTotalDist, SMLSIZE)
