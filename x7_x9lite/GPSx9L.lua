@@ -302,7 +302,8 @@ local function run(event)
 	elseif update == false then
 		
 		lcd.drawText(32,1,"no GPS data available" ,SMLSIZE + INVERS)
-		lcd.drawText(22,14, gpsSATS, SMLSIZE + INVERS + BLINK )		
+		lcd.drawText(4,10, RxBt .. "V", SMLSIZE)		
+		lcd.drawText(4,20, gpsSATS .. "sat", SMLSIZE + INVERS + BLINK)		
 		lcd.drawText(60,10, gpsDtH , SMLSIZE + INVERS + BLINK)
 		lcd.drawText(73,20, "km"  , SMLSIZE)
 		lcd.drawText(103,10, gpsTotalDist , SMLSIZE)
