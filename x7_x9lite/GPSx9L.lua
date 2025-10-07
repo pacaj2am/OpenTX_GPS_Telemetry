@@ -281,8 +281,8 @@ local function run(event)
 	if update == true then
 						
 		lcd.drawText(32,1,gpsFIX ,SMLSIZE + INVERS)			
-		lcd.drawText(4,10, gpsSATS .. "sat", SMLSIZE)		
-		lcd.drawText(4,20, RxBt .. "V", SMLSIZE)		
+		lcd.drawText(4,10, RxBt .. "V", SMLSIZE)		
+		lcd.drawText(4,20, gpsSATS .. "sat", SMLSIZE)		
 		lcd.drawText(60,10, gpsDtH, SMLSIZE)
 		lcd.drawText(73,20, "km"  , SMLSIZE)
 		lcd.drawText(103,10, gpsTotalDist, SMLSIZE)
